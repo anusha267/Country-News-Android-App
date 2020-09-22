@@ -5,41 +5,43 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.anushabhattacharya.countrynewsapp.api.ApiClient;
 import com.anushabhattacharya.countrynewsapp.api.ApiInterfaces;
 import com.anushabhattacharya.countrynewsapp.models.Articles;
 import com.anushabhattacharya.countrynewsapp.models.News;
+import com.google.android.gms.ads.NativeExpressAdView;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     public static final String API_KEY="37917dd5f50643038326ff619e98f37d";
+    public static final int numberOfAds=5;
     private RecyclerView recyclerView;
     private List<Articles> articles=new ArrayList<>();
+    private List<NativeExpressAdView> adViews=new ArrayList<>();
     private Adapter adapter;
-    private String TAG=MainActivity.class.getSimpleName();
     RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefresh;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         swipeRefresh=findViewById(R.id.swiperefresh);
         swipeRefresh.setOnRefreshListener(this);
@@ -59,7 +61,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
 
+
     }
+
+    /**private void addNativeExpressAds() {
+        for(int i=0; i<numberOfAds;i++)
+        {
+            final NativeExpressAdView adView=new NativeExpressAdView(MainActivity.this);
+            adViews.add(i,adView);
+        }
+
+    }**/
 
 
     public void loadArticles(String countryCode)
@@ -81,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     itemView();
+                    //addNativeExpressAds();
+
                 }
                 else
                 {

@@ -25,6 +25,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.ads.nativetemplates.TemplateView;
 
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
     private List<Articles> articles;
     private Context context;
     private OnItemClickListener onItemClickListener;
-
 
     public Adapter(List<Articles> articles, Context context) {
         this.articles = articles;
@@ -79,9 +79,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.imageView);
 
-        holder.title.setText("\u2022"+model.getTitle());
-        holder.desc.setText("\u2022"+model.getDescription());
-        holder.source.setText("\u2022"+model.getSource().getName());
+        holder.title.setText(model.getTitle());
+        holder.desc.setText(model.getDescription());
+        holder.source.setText(model.getSource().getName());
         String publishedAt=model.getPublishedAt().substring(0,10)+" ("+model.getPublishedAt().substring(11,(model.getPublishedAt().length()-4))+")";
         holder.time.setText(publishedAt);
         //holder.published_ad.setText(model.getPublishedAt().substring(11,(model.getPublishedAt().length()-1)));

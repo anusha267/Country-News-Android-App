@@ -29,6 +29,7 @@ public class OpenNews extends AppCompatActivity {
         {
             webview.setVisibility(View.INVISIBLE);
             Toast.makeText(this, "Error loading data! Please check your network connection!", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
         }
 
 
@@ -43,6 +44,7 @@ public class OpenNews extends AppCompatActivity {
         webSettings.setBuiltInZoomControls(true);
         webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webview.loadUrl(url);
+
     }
 
     @Override

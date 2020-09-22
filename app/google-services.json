@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "324088609587",
+    "firebase_url": "https://country-news-app.firebaseio.com",
+    "project_id": "country-news-app",
+    "storage_bucket": "country-news-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324088609587:android:44facc9ffae2a95a1e5c46",
+        "android_client_info": {
+          "package_name": "com.anushabhattacharya.countrynewsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324088609587-qggdkdv39p97p6d6e867ahmed329nqb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVztV3EoqG_h-YJNvAiHdRL8-Ya9qyHgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324088609587-qggdkdv39p97p6d6e867ahmed329nqb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
