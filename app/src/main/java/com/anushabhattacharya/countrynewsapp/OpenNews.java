@@ -2,11 +2,13 @@ package com.anushabhattacharya.countrynewsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class OpenNews extends AppCompatActivity {
 
@@ -16,12 +18,30 @@ public class OpenNews extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_news);
+        Intent intent = getIntent();
+        String url1=intent.getStringExtra("url");
+        if(url1!=null) {
+            openWebView(url1);
+        }else
+        {
+            webview.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "Error loading data! Please check your network connection!", Toast.LENGTH_SHORT).show();
+        }
 
+
+    }
+
+    private void openWebView(String url) {
         webview=findViewById(R.id.webview);
         webview.setWebViewClient(new WebViewClient());
-        webview.loadUrl("https://www.google.com/");
+
         WebSettings webSettings=webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webview.loadUrl(url);
     }
 
     @Override

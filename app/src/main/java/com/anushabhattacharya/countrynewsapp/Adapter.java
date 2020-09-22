@@ -1,6 +1,7 @@
 package com.anushabhattacharya.countrynewsapp;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -47,6 +48,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         return new MyViewHolder(view, onItemClickListener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
         final MyViewHolder holder = holders;
@@ -77,9 +79,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.imageView);
 
-        holder.title.setText(model.getTitle());
-        holder.desc.setText(model.getDescription());
-        holder.source.setText(model.getSource().getName());
+        holder.title.setText("\u2022"+model.getTitle());
+        holder.desc.setText("\u2022"+model.getDescription());
+        holder.source.setText("\u2022"+model.getSource().getName());
         String publishedAt=model.getPublishedAt().substring(0,10)+" ("+model.getPublishedAt().substring(11,(model.getPublishedAt().length()-4))+")";
         holder.time.setText(publishedAt);
         //holder.published_ad.setText(model.getPublishedAt().substring(11,(model.getPublishedAt().length()-1)));

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.anushabhattacharya.countrynewsapp.api.ApiClient;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
 
+
     }
 
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     adapter=new Adapter(articles,MainActivity.this);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    itemView();
                 }
                 else
                 {
@@ -106,10 +109,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-       String countryCode=getCountry();
+        String countryCode=getCountry();
        Log.d("countryCode",countryCode);
        loadArticles(countryCode);
 
+    }
+
+    private void itemView(){
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, OpenNews.class);
+                String url=articles.get(position).getUrl();
+                intent.putExtra("url",url);
+                startActivity(intent);
+
+            }
+        });
     }
 
 }
