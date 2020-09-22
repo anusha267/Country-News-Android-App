@@ -12,7 +12,19 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.Retrofit.Builder;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
@@ -20,61 +32,59 @@ public class ApiClient {
     public static final String BASE_URL = "https://newsapi.org/v2/";
     public static Retrofit retrofit;
 
-    public static Retrofit getapiClient()
-    {
-        if(retrofit==null)
-        {
-            retrofit=new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(getOkHttpClient().build()).build();
+    public static Retrofit getApiClient(){
+
+        if (retrofit == null){
+
+            retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                    .client(getUnsafeOkHttpClient().build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
         }
 
         return retrofit;
     }
 
-    private static OkHttpClient.Builder getOkHttpClient() {
-
+    public static OkHttpClient.Builder getUnsafeOkHttpClient(){
         try {
-
-            final TrustManager[] allCerts=new TrustManager[]{
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
-                        public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
                         }
 
                         @Override
-                        public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
                         }
 
                         @Override
-                        public X509Certificate[] getAcceptedIssuers() {
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                             return new java.security.cert.X509Certificate[]{};
                         }
                     }
             };
 
-            final SSLContext sslContext= SSLContext.getInstance("SSL");
-            sslContext.init(null,allCerts,new java.security.SecureRandom());
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
 
-            final SSLSocketFactory sslSocketFactory=sslContext.getSocketFactory();
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) allCerts[0]);
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
-                public boolean verify(String s, SSLSession sslSession) {
+                public boolean verify(String hostname, SSLSession session) {
                     return true;
                 }
             });
             return builder;
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-
 
 }

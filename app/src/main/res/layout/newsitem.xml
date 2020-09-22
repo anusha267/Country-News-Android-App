@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#BBFFCA">
+    android:background="#304961">
 
 
     <androidx.cardview.widget.CardView
@@ -27,11 +27,11 @@
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
             
-            <ImageView
+            <!--<ImageView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:id="@+id/shadow_top"
-                android:layout_alignBottom="@id/img"/>
+                android:layout_alignBottom="@id/img"/>-->
             
             <ProgressBar
                 android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                 android:id="@+id/progress_load_photo"
                 android:layout_marginTop="60dp"/>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:id="@+id/author"
@@ -49,6 +49,7 @@
                 android:textColor="@android:color/holo_orange_dark"
                 android:layout_marginEnd="160dp"
                 android:textSize="20dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="Author"
                 android:gravity="bottom"
                 android:layout_alignLeft="@id/title"
@@ -65,7 +66,7 @@
                 android:padding="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="15dp">
 
 
 
@@ -89,7 +90,7 @@
 
 
 
-            </FrameLayout>
+            </FrameLayout>-->
             
             <TextView
                 android:layout_width="match_parent"
@@ -98,9 +99,10 @@
                 android:text="Title"
                 android:layout_marginHorizontal="16dp"
                 android:textColor="#474747"
+                android:maxLines="2"
                 android:textSize="22sp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/layoutDate"
+                android:layout_below="@id/img"
                 android:id="@+id/title"/>
 
             <TextView
@@ -115,7 +117,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/source"
                 android:text="Source"
                 android:fontFamily="sans-serif-medium"
@@ -123,7 +125,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#404040"
                 android:maxLines="1"
                 android:drawablePadding="10dp"
