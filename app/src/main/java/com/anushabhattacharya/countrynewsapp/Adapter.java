@@ -2,6 +2,7 @@ package com.anushabhattacharya.countrynewsapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
         holder.title.setText(model.getTitle());
         holder.desc.setText(model.getDescription());
         holder.source.setText(model.getSource().getName());
-        holder.time.setText(model.getPublishedAt().substring(0,10));
+        String publishedAt=model.getPublishedAt().substring(0,10)+" ("+model.getPublishedAt().substring(11,(model.getPublishedAt().length()-4))+")";
+        holder.time.setText(publishedAt);
         //holder.published_ad.setText(model.getPublishedAt().substring(11,(model.getPublishedAt().length()-1)));
         //holder.author.setText(model.getAuthor());
 
@@ -93,6 +95,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
+
+
     }
 
     public interface OnItemClickListener {
@@ -101,7 +105,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
-        TextView title, desc, author, published_ad, source, time;
+        TextView title, desc, source, time;
         ImageView imageView;
         ProgressBar progressBar;
         OnItemClickListener onItemClickListener;
@@ -114,7 +118,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
             title = itemView.findViewById(R.id.title);
             desc = itemView.findViewById(R.id.description);
             //author = itemView.findViewById(R.id.author);
-            //published_ad = itemView.findViewById(R.id.publishedAt);
+            //published_at = itemView.findViewById(R.id.publishedAt);
             source = itemView.findViewById(R.id.source);
             time = itemView.findViewById(R.id.time);
             imageView = itemView.findViewById(R.id.img);

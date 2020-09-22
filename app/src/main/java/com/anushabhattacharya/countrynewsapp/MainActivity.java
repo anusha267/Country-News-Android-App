@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -24,20 +26,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     public static final String API_KEY="37917dd5f50643038326ff619e98f37d";
     private RecyclerView recyclerView;
     private List<Articles> articles=new ArrayList<>();
     private Adapter adapter;
     private String TAG=MainActivity.class.getSimpleName();
     RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        swipeRefresh=findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(this);
+
         recyclerView=findViewById(R.id.recyclerView);
+
+
         layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         String countryCode=getCountry();
         Log.d("countryCode",countryCode);
         loadArticles(countryCode);
+
+
 
 
     }
@@ -73,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Toast.makeText(MainActivity.this, "Failed to load data!", Toast.LENGTH_SHORT).show();
                 }
+                swipeRefresh.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failed to load news! Check your internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Failed to load news! Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                swipeRefresh.setRefreshing(false);
             }
         });
 
@@ -91,4 +103,13 @@ public class MainActivity extends AppCompatActivity {
         String countryCode = tm.getNetworkCountryIso();
         return countryCode;
     }
+
+    @Override
+    public void onRefresh() {
+       String countryCode=getCountry();
+       Log.d("countryCode",countryCode);
+       loadArticles(countryCode);
+
+    }
+
 }
