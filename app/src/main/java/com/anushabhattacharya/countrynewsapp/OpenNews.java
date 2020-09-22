@@ -19,8 +19,11 @@ public class OpenNews extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_news);
         Intent intent = getIntent();
+        webview=findViewById(R.id.webview);
+        webview.setWebViewClient(new WebViewClient());
         String url1=intent.getStringExtra("url");
         if(url1!=null) {
+            webview.setVisibility(View.VISIBLE);
             openWebView(url1);
         }else
         {
@@ -32,8 +35,6 @@ public class OpenNews extends AppCompatActivity {
     }
 
     private void openWebView(String url) {
-        webview=findViewById(R.id.webview);
-        webview.setWebViewClient(new WebViewClient());
 
         WebSettings webSettings=webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
